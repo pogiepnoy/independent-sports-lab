@@ -26,7 +26,7 @@ export async function buildSlate(){
     const ag=(form.get(String(a.team.id))||[]).filter(g=>g.date<Date.parse(e.date)),hg=(form.get(String(h.team.id))||[]).filter(g=>g.date<Date.parse(e.date));
     const p=projectScores({sport,awayGames:ag,homeGames:hg,eventDate:Date.parse(e.date),fallback,homeAdv});const margin=p.homeExpected-p.awayExpected;
     const odds=comp?.odds?.[0],state=e.status?.type?.state||'pre';const seasonType=Number(e.season?.type??comp?.type?.id);
-    const eligible=state==='pre'&&seasonType!==1&&ag.length>=3&&hg.length>=3&&!/preseason|exhibition|friendly/i.test(String(e.season?.slug||''));
+    const eligible=state==='pre'&&seasonType!==1&&ag.length>=5&&hg.length>=5&&!/preseason|exhibition|friendly/i.test(String(e.season?.slug||''));
     const candidates=[];const ah=implied(odds?.moneyline?.away?.close?.odds),hh=implied(odds?.moneyline?.home?.close?.odds);
     const homeProb=normalCdf(margin/sd);
     if(sport!=='EPL'){if(hh!=null)candidates.push({market:'Moneyline',selection:h.team.displayName,edge:homeProb-hh,score:Math.abs(homeProb-hh),odds:odds.moneyline.home.close.odds});if(ah!=null)candidates.push({market:'Moneyline',selection:a.team.displayName,edge:1-homeProb-ah,score:Math.abs(1-homeProb-ah),odds:odds.moneyline.away.close.odds});}
